@@ -1,0 +1,12 @@
+{
+  "presets": ["es2015", "stage-0"],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "panels": "./components/panels"
+      }
+    }],
+    "transform-flow-strip-types"
+  ]
+}
