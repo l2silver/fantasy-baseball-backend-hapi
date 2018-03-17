@@ -12,7 +12,7 @@ const {
 
 export const connection = { database, user, password, host, port };
 export const squel = blandSquel.useFlavour('postgres');
-export const db = pgp()(connection);
+export const db = pgp()(process.env.DATABASE_URL);
 
 export default class Repo {
   tableName: string;
