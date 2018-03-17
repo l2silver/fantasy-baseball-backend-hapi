@@ -29,9 +29,7 @@
     "rejoice": "^4.0.0",
     "squel": "^5.8.0",
     "validate.js": "^0.11.1",
-    "vision": "^4.1.1"
-  },
-  "devDependencies": {
+    "vision": "^4.1.1",
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.4.1",
