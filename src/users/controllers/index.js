@@ -1,14 +1,21 @@
 // @flow
 // import RPC from '@imp_pat/server-utils/rpcUtils';
 import { defaultController } from '@ps/hapi-utils/controllers';
-import joi from 'joi';
-import { generateDigest } from '../utils';
-import * as services from '../services';
+import repo from '../repositories';
 
 const userController = options => defaultController('users', options);
 
 export function getAllHandler(request: *, reply: *) {
-  reply(services.getAll());
+  const tables = ['c', '1b', '2b', 'ss', '3b', 'rf', 'cf', 'lf', 'of', 'p'];
+  return Promise.all(tables.map(name => repo.getTable(name))).then(results => results.reduce((finalResult, value, index) => {
+    if (tables[index] === 'p') {
+      finalResult['p'] = value.filter((p)=>(p.gs >= 3))
+      finalResult['rp'] = value.filter((p)=>((p.g - p.gs) >= 5))
+    } else {
+      finalResult[tables[index]] = value;
+    }
+    return finalResult;
+  }, {})).then(reply)
 }
 
 export const getAll = userController({
@@ -20,27 +27,6 @@ export const getAll = userController({
   },
 });
 
-export function checkEmailHandler(request: *, reply: *) {
-  const { email } = request.payload;
-  return services.doesEmailAlreadyExist(email).then(() => reply(false))
-  .catch(() => reply(true));
-}
-
-export const checkEmail = userController({
-  method: 'POST',
-  path: '/check_email',
-  handler: checkEmailHandler,
-  config: {
-    auth: false,
-    validate: {
-      payload: {
-        email: joi.string().required().email(),
-      },
-    },
-  },
-});
-
 export default [
   getAll,
-  checkEmail,
 ];
