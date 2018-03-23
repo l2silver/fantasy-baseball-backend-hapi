@@ -32,7 +32,6 @@ export const getAll = userController({
 const updateHandler = (req, rep)=>{
   const playerid = req.params.playerid
   const params = {playerid}
-  rep({id: '1'});
   return additionalRepo.retrieve(params).then(ad => {
     if (ad) {
       return additionalRepo.update(params, req.payload);

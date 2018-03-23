@@ -3,7 +3,7 @@ import Repo, { db, squel } from '@ps/hapi-utils/repos';
 
 class UserRepo extends Repo {
   getTable = (table: string) => {
-    const query = `SELECT t.*, additional.notes from "${table}" as t LEFT JOIN additional ON additional.playerid = t.playerid ORDER BY adp asc`;
+    const query = `SELECT t.*, additional.*, t.playerid as playerid from "${table}" as t LEFT JOIN additional ON additional.playerid = t.playerid ORDER BY adp asc`;
     return db.many(query);
   };
 }
