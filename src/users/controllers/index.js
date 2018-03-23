@@ -1,7 +1,9 @@
 // @flow
 // import RPC from '@imp_pat/server-utils/rpcUtils';
+import joi from 'joi'
 import { defaultController } from '@ps/hapi-utils/controllers';
 import repo from '../repositories';
+import additionalRepo from '../repositories/additional';
 
 const userController = options => defaultController('users', options);
 
@@ -27,6 +29,34 @@ export const getAll = userController({
   },
 });
 
+const updateHandler = (req, rep)=>{
+  const playerid = req.params.playerid
+  const params = {playerid}
+  rep({id: '1'});
+  return additionalRepo.retrieve(params).then(ad => {
+    if (ad) {
+      return additionalRepo.update(params, req.payload);
+    }
+    return additionalRepo.insert({...params, ...req.payload})
+  }).then(rep).catch(rep)
+}
+
+
+export const update = userController({
+  method: 'PATCH',
+  path: '/{playerid}',
+  handler: updateHandler,
+  config: {
+    auth: false,
+    validate: {
+      params: joi.any(),
+      payload: joi.any(),
+    }
+  },
+});
+
+
+
 export default [
-  getAll,
+  getAll, update
 ];

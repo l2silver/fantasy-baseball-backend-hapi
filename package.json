@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "rejoice -r dotenv/config -p ./ -c ./src/manifest.js -r babel-core/register",
-    "debug": "rejoice -r dotenv/config -p ./ -c ./src/manifest.js -r babel-core/register",
+    "debug": "node --inspect=5858 node_modules/.bin/rejoice -r dotenv/config -p ./ -c ./src/manifest.js -r babel-core/register",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "flow": "flow",
