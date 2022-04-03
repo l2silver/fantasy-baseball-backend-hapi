@@ -1,9 +1,8 @@
 // @flow
 import validate from 'validate.js';
-import { promisify } from 'bluebird';
-import bcrypt from 'bcrypt';
 
-const hash = promisify(bcrypt.hash);
+
+const hash = ()=>Promise.resolve('randomDigest')
 
 const emailAndPasswordConstraints = {
   email: {

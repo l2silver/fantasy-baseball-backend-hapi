@@ -13,8 +13,14 @@ const {
 export const connection = { database, user, password, host, port };
 export const squel = blandSquel.useFlavour('postgres');
 console.log('DATABASE_URL', process.env.DATABASE_URL)
-export const db = pgp()(process.env.DATABASE_URL);
-
+export const db = pgp()(process.env.DATABASE_URL || {
+  host: 'localhost',
+  port: 5432,
+  database,
+  user,
+  // password: 'user-password',
+  max: 30 // use up to 30 connections
+});
 export default class Repo {
   tableName: string;
   constructor(tableName: string) {

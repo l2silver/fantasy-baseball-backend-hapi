@@ -25,6 +25,9 @@ export const getAll = userController({
   path: '',
   handler: getAllHandler,
   config: {
+    cors: {
+      origin: ['*'],
+    },
     auth: false,
   },
 });
@@ -47,6 +50,9 @@ export const update = userController({
   handler: updateHandler,
   config: {
     auth: false,
+    cors: {
+      origin: ['*'],
+    },
     validate: {
       params: joi.any(),
       payload: joi.any(),
